@@ -48,7 +48,6 @@ with open('test.txt', 'r') as f:  # открытие и чтение файла 
                     except IndexError:
                         continue
                 continue
-
             if numbers[i] == '000':  # смена каждой 3й пары после нулей
                 try:
                     h = False
