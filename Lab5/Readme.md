@@ -3,4 +3,4 @@
 # Вариант 2.
 F(0) = 5; F(1) = 1; F(n) = 2F(n-1) + F(n-2)
 
-<a href=https://disk.yandex.ru/i/wWqXHulFZtE2gg>ссылка на отчёт с графиками</a>  
+<a href=https://disk.yandex.ru/i/wWqXHulFZtE2gg> Ссылка на отчёт с графиками</a>  
