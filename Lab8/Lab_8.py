@@ -11,14 +11,14 @@ class PhilharmonyGUI: #класс для гип с двумя окнами, ме
         self.window = tk.Tk()
         self.window.title('Форма для расчёта лучшего трио')
         self.window['bg'] = '#DFF5F2'
-        self.window.wm_attributes('-alpha', 0.9)
+        self.window.wm_attributes('-alpha', 0.9) #прозрачность фона окна
         self.window.geometry('540x680')
-        self.window.resizable(False, False)
-        custom_font = font.Font(family="Helvetica", size=12)
+        self.window.resizable(False, False)  #фиксированноть размера окна
+        custom_font = font.Font(family="Helvetica", size=12)  # общий шрифт по умолчанию
         self.window.option_add("*Font", custom_font)
         self.frame = tk.Frame(self.window, width=420, height=610, bg='#46B7B9')
         self.frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-        self.canvas=tk.Canvas(self.frame, width=30, height=40)
+        self.canvas=tk.Canvas(self.frame, width=30, height=40) #создание поля
         self.canvas.place(relx=0.5, rely=0.18, anchor=tk.CENTER)
         self.zadacha_text=tk.Label(self.frame, width=45, height=10, bg='#87DFD6', text='Найдите выгодное трио музыкантов \nдля концерта, указав желательный уровень \nнавыка и максимальный бюджет.'
                                                                                        '\n Программа подберёт вариант с меньшей \nстоимостью  и  с наибольшей суммой навыка, \nкоторая  будет больше ограничения в три раза .')
