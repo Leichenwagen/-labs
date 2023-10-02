@@ -61,7 +61,6 @@ class PhilharmonyGUI: #класс для гип с двумя окнами, ме
                 self.results_window = tk.Tk()#открытие окна с результатом
                 self.results_window.title('Полученный результат')
                 self.results_window['bg'] = '#2F9296'
-                self.results_window.wm_attributes('-alpha', 0.9)
                 self.results_window.geometry('550x400')
                 self.results_window.resizable(False, False)
                 self.results_label = tk.Label(self.results_window, width=55, height=10, text="", bg='#87DFD6')
