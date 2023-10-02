@@ -10,30 +10,29 @@ class PhilharmonyGUI: #класс для гип с двумя окнами, ме
         self.instruments = instruments
         self.window = tk.Tk()
         self.window.title('Форма для расчёта лучшего трио')
-        self.window['bg'] = '#DFF5F2'
-        self.window.wm_attributes('-alpha', 0.9) #прозрачность фона окна
-        self.window.geometry('540x680')
-        self.window.resizable(False, False)  #фиксированноть размера окна
-        custom_font = font.Font(family="Helvetica", size=12)  # общий шрифт по умолчанию
+
+        self.window.geometry('490x470')
+        self.window.resizable(False, False)
+        custom_font = font.Font(family="Helvetica", size=12)
         self.window.option_add("*Font", custom_font)
-        self.frame = tk.Frame(self.window, width=420, height=610, bg='#46B7B9')
+        self.frame = tk.Frame(self.window, width=420, height=610)
         self.frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-        self.canvas=tk.Canvas(self.frame, width=30, height=40) #создание поля
+        self.canvas=tk.Canvas(self.frame, width=30, height=40)
         self.canvas.place(relx=0.5, rely=0.18, anchor=tk.CENTER)
-        self.zadacha_text=tk.Label(self.frame, width=45, height=10, bg='#87DFD6', text='Найдите выгодное трио музыкантов \nдля концерта, указав желательный уровень \nнавыка и максимальный бюджет.'
-                                                                                       '\n Программа подберёт вариант с меньшей \nстоимостью  и  с наибольшей суммой навыка, \nкоторая  будет больше ограничения в три раза .')
-        self.zadacha_text.place(relx=0.5, rely=0.20, anchor=tk.CENTER)
-        self.min_skill_label = tk.Label(self.frame, width=35, height=3, bg='#DFF5F2', text="Введите минимальный уровень\n умения игры на инструменте (от 2 до 5):")
+        self.zadacha_text=tk.Label(self.frame, width=45, height=8, bg='#87DFD6', text='Найдите выгодное трио музыкантов \nдля концерта, указав желательный уровень \nнавыка и максимальный бюджет.'
+                                                                           '\n Программа подберёт вариант с меньшей \nстоимостью  и  с наибольшей суммой навыка, \nкоторая  будет больше ограничения в три раза .')
+        self.zadacha_text.place(relx=0.5, rely=0.25, anchor=tk.CENTER)
+        self.min_skill_label = tk.Label(self.frame, width=35, height=3, text="Введите минимальный уровень\n умения игры на инструменте (от 2 до 5):")
         self.min_skill_label.place(relx=0.5, rely=0.45, anchor=tk.CENTER)
         self.min_skill_entry = tk.Entry(self.frame, width=17, bg='#87DFD6', justify='center')
-        self.min_skill_entry.place(relx=0.5, rely=0.55, anchor=tk.CENTER)
-        self.max_budget_label = tk.Label(self.frame, width=35, height=3, bg='#DFF5F2', text="Введите максимальный бюджет \nдля найма музыкантов в трио \n(начиная от 15000 рублей): ")
-        self.max_budget_label.place(relx=0.5, rely=0.65, anchor=tk.CENTER)
+        self.min_skill_entry.place(relx=0.5, rely=0.52, anchor=tk.CENTER)
+        self.max_budget_label = tk.Label(self.frame, width=35, height=3, text="Введите максимальный бюджет \nдля найма музыкантов в трио \n(начиная от 15000 рублей): ")
+        self.max_budget_label.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
         self.max_budget_entry = tk.Entry(self.frame, width=17, bg='#87DFD6', justify='center')
-        self.max_budget_entry.place(relx=0.5, rely=0.75, anchor=tk.CENTER)
-        self.find_button = tk.Button(self.frame, width=55, height=3, text="Найти трио", command=self.find_best_trio, bd = 0, fg = '#2F9296', bg = '#DFF5F2',underline = 0 , activebackground = '#2F9296', activeforeground = '#DFF5F2', cursor = 'hand2')
+        self.max_budget_entry.place(relx=0.5, rely=0.68, anchor=tk.CENTER)
+        self.find_button = tk.Button(self.frame, width=55, height=3, text="Найти трио", command=self.find_best_trio, bd = 1, bg = '#87DFD6',underline = 0 , activebackground = '#2F9296', activeforeground = '#DFF5F2', cursor = 'hand2')
         self.find_button.config(font=('Helvetica', 14))
-        self.find_button.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
+        self.find_button.place(relx=0.5, rely=0.78, anchor=tk.CENTER)
     def find_best_trio(self):
         try:
             min_skill = int(self.min_skill_entry.get())
@@ -95,4 +94,3 @@ def main():#функция передающая список объектов к
     philharmony_gui = PhilharmonyGUI(instruments)
     philharmony_gui.start()
 if __name__ == "__main__":#только при запуске напрямую
-    main()
