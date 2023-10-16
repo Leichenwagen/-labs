@@ -135,13 +135,23 @@ class TicTacToe: #окошко с игрой
         self.game_window.title("Крестики-Нолики")
         self.buttons = [[tk.Button(self.game_window, text='', font=('normal', 30), width=7,height=3, cursor='hand2',
                                    command= lambda row=i, col=j: self.tap(row, col)) for j in range(3)] for i in range(3)]
-        for i in range(3): #для кнопок по рядам, цвет при наведении
+        for i in range(3): #для кнопок по рядам
             for j in range(3):
                 self.buttons[i][j].grid(row=i, column=j)
-                self.buttons[i][j].bind("<Enter>", lambda event: event.widget.config(bg="light blue"))
-                self.buttons[i][j].bind("<Leave>", lambda event: event.widget.config(bg="SystemButtonFace"))
+                self.buttons[i][j].bind("<Enter>", self.enter_button)
+                self.buttons[i][j].bind("<Leave>", self.leave_button)
         self.game_matrix = [['' for _ in range(3)] for _ in range(3)] #матрица для координат
         self.player_turn = True
+
+    def enter_button(self, event): #подсветка при наведении на активную кнопку
+        button = event.widget
+        if button.cget('state') == tk.NORMAL:
+            button.config(bg="light blue")
+    def leave_button(self, event):
+        button = event.widget
+        if button.cget('state') == tk.NORMAL:
+            button.config(bg="SystemButtonFace")
+
     def tap(self, row, col):#обработка нажатия
         if self.game_matrix[row][col] == '' and self.player_turn: #для хода игрока
             self.buttons[row][col].config(state=tk.DISABLED, text='X')
@@ -226,8 +236,8 @@ class TicTacToe: #окошко с игрой
         self.game_matrix = [['' for _ in range(3)] for _ in range(3)]
         for i in range(3):
             for j in range(3):
-                self.buttons[i][j].bind("<Enter>", lambda event: event.widget.config(bg="light blue"))
-                self.buttons[i][j].bind("<Leave>", lambda event: event.widget.config(bg="SystemButtonFace"))
+                self.buttons[i][j].bind("<Enter>", self.enter_button)
+                self.buttons[i][j].bind("<Leave>", self.leave_button)
                 self.buttons[i][j].config(text='', state='normal', command=lambda row=i, col=j: self.tap(row, col))
         self.player_turn = True
     def end_game(self, result):#вывод о победе и закрытие\сброс
