@@ -3,33 +3,36 @@
  знаков после запятой. У алгоритма д.б. линейная сложность. Операция умножения –поэлементная. Знак первого слагаемого +.'''
 import numpy as np
 from decimal import Decimal, getcontext
-def custom_sum(x, t):# Принимает матрицу x и точность t для вычисления суммы знакопеременного ряда.
-    znam, n = 1, 1 # Инициализация переменных
-    summa, delta = 0, 0
-    matrix_power = x
-    while abs(delta) < Decimal('1e-{}'.format(t)):# Цикл для вычисления суммы ряда с учетом точности продолжается пока слагаемое не будет меньше t.
-        matrix_power *= np.dot(x, x)   # Обновление степени матрицы.
-        znam *= (2 * n) * (2 * n + 1)# Вычисление знаменателя для текущего слагаемого.
-        delta = Decimal(np.linalg.det(matrix_power)) / Decimal(znam)# Вычисление текущего слагаемого и добавление его к общей сумме.
-        summa += (-1) * delta
-        # print(f'Степень матрицы {2*n+1}: \n {matrix_power}')
-        n += 1
-        # print(n - 1, ':', f'Текущая сумма: {summa},\n Слагаемое {delta}, \n Текущий знаменатель: {znam}')  # Печать значений для отладки.
-    print(f'Количество итераций: {n - 1}')
-    return summa # Возвращение вычисленной суммы ряда.
-try:
-    t = int(input("Введите число t, являющееся точностью (количеством знаков после запятой): "))# Ввод точности t от пользователя.
-    while t > 100 or t < 1:# Проверка на допустимость введенной точности.
+def count_summ(matrix, t):# Инициализация переменных
+    buf_eps = t # Сохранение начальной точности
+    t = 1 / (10 ** t)
+    print(f'Заданная точность: {t}\n')
+    result_matrix = matrix.copy()
+    i, fact_n, delta, result_num = 1, 1, 1, 0
+    while abs(delta) > t:# Цикл для вычисления суммы ряда, как только добавляемое слагаемое становится меньше т, то выходим из цикла
+        n = i * 2 + 1
+        fact_n *= (2 * i) * (2 * i + 1) # Вычисление факториала
+        result_matrix = np.linalg.matrix_power(matrix, n)# Возведение матрицы в степень n
+        matrix_det = Decimal(np.linalg.det(result_matrix))
+        delta = matrix_det / Decimal(fact_n)
+        result_num += abs(delta) if i == 1 else delta * (-1) ** i  # Добавление слагаемого к сумме ряда
+        i += 1
+        # print(f'Матрица ({n}-ая степень):\n{result_matrix}')# Вывод информации для отладки
+        # print(f'Слагаемое: {delta} \nДетерминант: {matrix_det} \nФакториал {n}: {fact_n} \nТекущая сумма: {result_num}\n')
+    print(f"Количество итераций: {i - 1}")
+    return result_num
+try:# Ввод точности t
+    t = int(input("Введите число t, являющееся точностью (количеством знаков после запятой): "))
+    while t > 100 or t < 1:# Проверка допустимости введенной точности
         t = int(input("Введите число t, большее или равное 1:\n"))
-    k = np.random.randint(2, 10)# Генерация случайной размерности матрицы от 2 до 10.
-    x = np.random.uniform(-1.0, 1.0, size=(k, k)).astype(float)# Генерация случайной вещественной матрицы размера (k, k).
-    Rang = np.linalg.matrix_rank(x)# Вычисление ранга матрицы x.
-    getcontext().prec = t + 100# Установка точности для десятичных вычислений.
+    k = np.random.randint(2, 10)# Генерация случайной матрицы
+    matrix = np.random.uniform(-1, 1, size=(k, k))
+    Rang = np.linalg.matrix_rank(matrix)  # Вычисление ранга матрицы x.
+    getcontext().prec = t + 100 # Установка точности для десятичных вычислений.
     np.set_printoptions(linewidth=200)
-    print("Сгенерированная матрица:\n", x)# Печать сгенерированной матрицы и ее ранга.
-    print("Ранг матрицы:", Rang)
-    summa = custom_sum(x, t)# Вычисление суммы ряда и округление до указанной точности.
-    rounded_summa = round(summa, t)
+    print(f"Сгенерированная матрица:\n {matrix} \nРанг матрицы: {Rang}")
+    summa_tot = count_summ(matrix, t)
+    rounded_summa = round(summa_tot, t)
     print(f"Сумма ряда с точностью {t} знаков после запятой с округлением: {rounded_summa}")
-except ValueError:# Обработка ошибки ввода (если введено не число).
+except ValueError:
     print("\nВведенный символ не является числом. Перезапустите программу и введите число.")
