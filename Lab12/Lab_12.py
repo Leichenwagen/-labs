@@ -12,7 +12,7 @@ def count_summ(matrix, t):# Инициализация переменных
     while abs(delta) > t:# Цикл для вычисления суммы ряда, как только добавляемое слагаемое становится меньше т, то выходим из цикла
         n = i * 2 + 1
         fact_n *= (2 * i) * (2 * i + 1) # Вычисление факториала
-        result_matrix = np.linalg.matrix_power(matrix, n)# Возведение матрицы в степень n
+        result_matrix = np.dot(np.dot(result_matrix, matrix), matrix)# Возведение матрицы в степень n
         matrix_det = Decimal(np.linalg.det(result_matrix))
         delta = matrix_det / Decimal(fact_n)
         result_num += abs(delta) if i == 1 else delta * (-1) ** i  # Добавление слагаемого к сумме ряда
